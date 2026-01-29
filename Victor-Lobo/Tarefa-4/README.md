@@ -19,5 +19,7 @@ PUT /veiculo/:id — Atualizar
 DELETE /veiculo/:id — Remover
 
 **Executar o projeto:** node server.js
+
 **Execução padrão em:** http://localhost:3000/veiculo
+
 *"Banco de dados" em memória*
