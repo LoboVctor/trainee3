@@ -1,0 +1,191 @@
+<div class="card">
+  <h1>🚗 Cadastro de Veículo</h1>
+
+  <div class="alert-ok" *ngIf="sucesso">✅ Veículo cadastrado com sucesso!</div>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+
+    <h2>Proprietário</h2>
+
+    <!-- 1. Nome — input texto -->
+    <div class="field">
+      <label>Nome completo *</label>
+      <input type="text" name="nome" [(ngModel)]="veiculo.nome" #nome="ngModel"
+        required minlength="3" placeholder="Ex: João da Silva"
+        [class.err]="nome.invalid && (nome.touched || enviado)"
+        [class.ok]="nome.valid" />
+      <span class="err-msg" *ngIf="nome.invalid && (nome.touched || enviado)">
+        Nome obrigatório (mín. 3 caracteres).
+      </span>
+    </div>
+
+    <!-- 2. E-mail -->
+    <div class="field">
+      <label>E-mail *</label>
+      <input type="email" name="email" [(ngModel)]="veiculo.email" #email="ngModel"
+        required email placeholder="email@exemplo.com"
+        [class.err]="email.invalid && (email.touched || enviado)"
+        [class.ok]="email.valid" />
+      <span class="err-msg" *ngIf="email.invalid && (email.touched || enviado)">
+        E-mail inválido.
+      </span>
+    </div>
+
+    <!-- 3. Senha -->
+    <div class="field">
+      <label>Senha *</label>
+      <input type="password" name="senha" [(ngModel)]="veiculo.senha" #senha="ngModel"
+        required minlength="6" placeholder="Mín. 6 caracteres"
+        [class.err]="senha.invalid && (senha.touched || enviado)"
+        [class.ok]="senha.valid" />
+      <span class="err-msg" *ngIf="senha.invalid && (senha.touched || enviado)">
+        Senha obrigatória (mín. 6 caracteres).
+      </span>
+    </div>
+
+    <h2>Veículo</h2>
+
+    <!-- 4. Select — Tipo -->
+    <div class="field">
+      <label>Tipo *</label>
+      <select name="tipo" [(ngModel)]="veiculo.tipo" #tipo="ngModel" required
+        [class.err]="tipo.invalid && (tipo.touched || enviado)"
+        [class.ok]="tipo.valid">
+        <option value="">Selecione...</option>
+        <option>Automóvel</option>
+        <option>Motocicleta</option>
+        <option>Caminhão</option>
+        <option>Van</option>
+      </select>
+      <span class="err-msg" *ngIf="tipo.invalid && (tipo.touched || enviado)">
+        Selecione o tipo.
+      </span>
+    </div>
+
+    <!-- 5. Marca -->
+    <div class="field">
+      <label>Marca *</label>
+      <input type="text" name="marca" [(ngModel)]="veiculo.marca" #marca="ngModel"
+        required placeholder="Ex: Toyota"
+        [class.err]="marca.invalid && (marca.touched || enviado)"
+        [class.ok]="marca.valid" />
+      <span class="err-msg" *ngIf="marca.invalid && (marca.touched || enviado)">
+        Marca obrigatória.
+      </span>
+    </div>
+
+    <!-- 6. Modelo -->
+    <div class="field">
+      <label>Modelo *</label>
+      <input type="text" name="modelo" [(ngModel)]="veiculo.modelo" #modelo="ngModel"
+        required placeholder="Ex: Corolla"
+        [class.err]="modelo.invalid && (modelo.touched || enviado)"
+        [class.ok]="modelo.valid" />
+      <span class="err-msg" *ngIf="modelo.invalid && (modelo.touched || enviado)">
+        Modelo obrigatório.
+      </span>
+    </div>
+
+    <!-- 7. Ano -->
+    <div class="field">
+      <label>Ano *</label>
+      <input type="number" name="ano" [(ngModel)]="veiculo.ano" #ano="ngModel"
+        required min="1950" max="2026" placeholder="Ex: 2022"
+        [class.err]="ano.invalid && (ano.touched || enviado)"
+        [class.ok]="ano.valid" />
+      <span class="err-msg" *ngIf="ano.invalid && (ano.touched || enviado)">
+        Ano inválido (1950–2026).
+      </span>
+    </div>
+
+    <!-- 8. Placa -->
+    <div class="field">
+      <label>Placa *</label>
+      <input type="text" name="placa" [(ngModel)]="veiculo.placa" #placa="ngModel"
+        required pattern="^[A-Za-z]{3}[0-9]{4}$|^[A-Za-z]{3}[0-9][A-Za-z][0-9]{2}$"
+        placeholder="ABC1234" maxlength="7"
+        [class.err]="placa.invalid && (placa.touched || enviado)"
+        [class.ok]="placa.valid" />
+      <span class="err-msg" *ngIf="placa.invalid && (placa.touched || enviado)">
+        Placa inválida (ex: ABC1234).
+      </span>
+    </div>
+
+    <!-- 9. Select — Combustível -->
+    <div class="field">
+      <label>Combustível *</label>
+      <select name="combustivel" [(ngModel)]="veiculo.combustivel" #combustivel="ngModel" required
+        [class.err]="combustivel.invalid && (combustivel.touched || enviado)"
+        [class.ok]="combustivel.valid">
+        <option value="">Selecione...</option>
+        <option>Gasolina</option>
+        <option>Etanol</option>
+        <option>Flex</option>
+        <option>Diesel</option>
+        <option>Elétrico</option>
+      </select>
+      <span class="err-msg" *ngIf="combustivel.invalid && (combustivel.touched || enviado)">
+        Selecione o combustível.
+      </span>
+    </div>
+
+    <h2>Classificação</h2>
+
+    <!-- 10. Radio — Condição -->
+    <div class="field">
+      <label>Condição *</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="condicao" [(ngModel)]="veiculo.condicao" value="Novo" required />
+          Novo
+        </label>
+        <label>
+          <input type="radio" name="condicao" [(ngModel)]="veiculo.condicao" value="Usado" required />
+          Usado
+        </label>
+      </div>
+      <span class="err-msg" *ngIf="!veiculo.condicao && enviado">
+        Selecione a condição.
+      </span>
+    </div>
+
+    <!-- 11. Radio — Transmissão -->
+    <div class="field">
+      <label>Transmissão *</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="transmissao" [(ngModel)]="veiculo.transmissao" value="Manual" required />
+          Manual
+        </label>
+        <label>
+          <input type="radio" name="transmissao" [(ngModel)]="veiculo.transmissao" value="Automático" required />
+          Automático
+        </label>
+        <label>
+          <input type="radio" name="transmissao" [(ngModel)]="veiculo.transmissao" value="CVT" required />
+          CVT
+        </label>
+      </div>
+      <span class="err-msg" *ngIf="!veiculo.transmissao && enviado">
+        Selecione a transmissão.
+      </span>
+    </div>
+
+    <h2>Acessórios</h2>
+
+    <!-- 12. Checkboxes -->
+    <div class="check-group">
+      <label><input type="checkbox" name="arCond"  [(ngModel)]="veiculo.acessorios.arCondicionado" /> Ar-condicionado</label>
+      <label><input type="checkbox" name="vidros"  [(ngModel)]="veiculo.acessorios.vidros" /> Vidros elétricos</label>
+      <label><input type="checkbox" name="airbag"  [(ngModel)]="veiculo.acessorios.airbag" /> Airbag</label>
+      <label><input type="checkbox" name="abs"     [(ngModel)]="veiculo.acessorios.abs" /> ABS</label>
+      <label><input type="checkbox" name="alarme"  [(ngModel)]="veiculo.acessorios.alarme" /> Alarme</label>
+    </div>
+
+    <div class="actions">
+      <button type="button" (click)="resetar(form)">Limpar</button>
+      <button type="submit">Cadastrar</button>
+    </div>
+
+  </form>
+</div>
