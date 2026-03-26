@@ -1,0 +1,225 @@
+<div class="card">
+  <h1>Cadastro de Veiculo</h1>
+
+  @if (sucesso) {
+    <div class="alert-ok">Veículo cadastrado com sucesso!</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    <h2>Proprietário</h2>
+
+    <!-- Nome -->
+    <div class="field">
+      <label>Nome completo *</label>
+      <input type="text" formControlName="nome" placeholder="Ex: Joao da Silva"
+        [class.err]="isInvalid('nome')"
+        [class.ok]="form.get('nome')?.valid" />
+      @if (isInvalid('nome')) {
+        <span class="err-msg">Nome obrigatorio (min. 3 caracteres).</span>
+      }
+    </div>
+
+    <!-- E-mail -->
+    <div class="field">
+      <label>E-mail *</label>
+      <input type="email" formControlName="email" placeholder="email@exemplo.com"
+        [class.err]="isInvalid('email')"
+        [class.ok]="form.get('email')?.valid" />
+      @if (isInvalid('email')) {
+        <span class="err-msg">E-mail inválido.</span>
+      }
+    </div>
+
+    <!-- Senha -->
+    <div class="field">
+      <label>Senha *</label>
+      <input type="password" formControlName="senha" placeholder="Min. 6 caracteres"
+        [class.err]="isInvalid('senha')"
+        [class.ok]="form.get('senha')?.valid" />
+      @if (isInvalid('senha')) {
+        <span class="err-msg">Senha obrigatória (min. 6 caracteres).</span>
+      }
+    </div>
+
+    <h2>Veículo</h2>
+
+    <!-- Tipo -->
+    <div class="field">
+      <label>Tipo *</label>
+      <select formControlName="tipo"
+        [class.err]="isInvalid('tipo')"
+        [class.ok]="form.get('tipo')?.valid">
+        <option value="">Selecione...</option>
+        <option>Automóvel</option>
+        <option>Motocicleta</option>
+        <option>Caminhão</option>
+        <option>Van</option>
+      </select>
+      @if (isInvalid('tipo')) {
+        <span class="err-msg">Selecione o tipo.</span>
+      }
+    </div>
+
+    <!-- Marca -->
+    <div class="field">
+      <label>Marca *</label>
+      <input type="text" formControlName="marca" placeholder="Ex: Toyota"
+        [class.err]="isInvalid('marca')"
+        [class.ok]="form.get('marca')?.valid" />
+      @if (isInvalid('marca')) {
+        <span class="err-msg">Marca obrigatória.</span>
+      }
+    </div>
+
+    <!-- Modelo -->
+    <div class="field">
+      <label>Modelo *</label>
+      <input type="text" formControlName="modelo" placeholder="Ex: Corolla"
+        [class.err]="isInvalid('modelo')"
+        [class.ok]="form.get('modelo')?.valid" />
+      @if (isInvalid('modelo')) {
+        <span class="err-msg">Modelo obrigatório.</span>
+      }
+    </div>
+
+    <!-- Ano -->
+    <div class="field">
+      <label>Ano *</label>
+      <input type="number" formControlName="ano" placeholder="Ex: 2022"
+        [class.err]="isInvalid('ano')"
+        [class.ok]="form.get('ano')?.valid" />
+      @if (isInvalid('ano')) {
+        <span class="err-msg">Ano inválido (1950-2026).</span>
+      }
+    </div>
+
+    <!-- Placa -->
+    <div class="field">
+      <label>Placa *</label>
+      <input type="text" formControlName="placa" placeholder="ABC1234 ou ABC1D23" maxlength="7"
+        [class.err]="isInvalid('placa')"
+        [class.ok]="form.get('placa')?.valid" />
+      @if (isInvalid('placa')) {
+        <span class="err-msg">Placa inválida (ex: ABC1234 ou ABC1D23).</span>
+      }
+    </div>
+
+    <!-- Combustivel -->
+    <div class="field">
+      <label>Combustível *</label>
+      <select formControlName="combustivel"
+        [class.err]="isInvalid('combustivel')"
+        [class.ok]="form.get('combustivel')?.valid">
+        <option value="">Selecione...</option>
+        <option>Gasolina</option>
+        <option>Etanol</option>
+        <option>Flex</option>
+        <option>Diesel</option>
+        <option>Elétrico</option>
+      </select>
+      @if (isInvalid('combustivel')) {
+        <span class="err-msg">Selecione o combustível.</span>
+      }
+    </div>
+
+    <h2>Classificação</h2>
+
+    <!-- Condição -->
+    <div class="field">
+      <label>Condição *</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" formControlName="condicao" value="Novo" />
+          Novo
+        </label>
+        <label>
+          <input type="radio" formControlName="condicao" value="Usado" />
+          Usado
+        </label>
+      </div>
+      @if (isInvalid('condicao')) {
+        <span class="err-msg">Selecione a condição.</span>
+      }
+    </div>
+
+    <!-- Transmissão -->
+    <div class="field">
+      <label>Transmissão *</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" formControlName="transmissao" value="Manual" />
+          Manual
+        </label>
+        <label>
+          <input type="radio" formControlName="transmissao" value="Automatico" />
+          Automático
+        </label>
+        <label>
+          <input type="radio" formControlName="transmissao" value="CVT" />
+          CVT
+        </label>
+      </div>
+      @if (isInvalid('transmissao')) {
+        <span class="err-msg">Selecione a transmissão.</span>
+      }
+    </div>
+
+    <!-- FormRecord: Acessorios -->
+    <h2>Acessórios</h2>
+
+    <div class="check-group" formGroupName="acessorios">
+      @for (key of acessoriosKeys; track key) {
+        <label>
+          <input type="checkbox" [formControlName]="key" />
+          {{ acessoriosLabels[key] }}
+        </label>
+      }
+    </div>
+
+    <!-- FormArray: Proprietarios Anteriores -->
+    <h2>Proprietários Anteriores</h2>
+
+    <div formArrayName="proprietariosAnteriores">
+      @for (ctrl of proprietariosAnteriores.controls; track $index; let i = $index) {
+        <div class="array-item" [formGroupName]="i">
+          <span class="array-item-label">Proprietario {{ i + 1 }}</span>
+
+          <div class="field">
+            <label>Nome *</label>
+            <input type="text" formControlName="nome" placeholder="Ex: Maria Souza"
+              [class.err]="isInvalidArrayField(i, 'nome')"
+              [class.ok]="getProprietarioGroup(i).get('nome')?.valid" />
+            @if (isInvalidArrayField(i, 'nome')) {
+              <span class="err-msg">Nome obrigatório.</span>
+            }
+          </div>
+
+          <div class="field">
+            <label>CPF / CNPJ *</label>
+            <input type="text" formControlName="documento" placeholder="Ex: 000.000.000-00"
+              [class.err]="isInvalidArrayField(i, 'documento')"
+              [class.ok]="getProprietarioGroup(i).get('documento')?.valid" />
+            @if (isInvalidArrayField(i, 'documento')) {
+              <span class="err-msg">Documento obrigatório.</span>
+            }
+          </div>
+
+          <button type="button" class="btn-remove" (click)="removerProprietario(i)">
+            Remover
+          </button>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn-add" (click)="adicionarProprietario()">
+      + Adicionar proprietário anterior
+    </button>
+
+    <div class="actions">
+      <button type="button" (click)="resetar()">Limpar</button>
+      <button type="submit">Cadastrar</button>
+    </div>
+
+  </form>
+</div>
