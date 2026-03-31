@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Veículos Cadastrados</h2>
+ 
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Ano</th>
+        <th>Placa</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (veiculo of veiculos(); track veiculo.id) {
+        @if (veiculoEditando()?.id === veiculo.id) {
+          <!-- Edição -->
+          <tr class="table-warning">
+            <td>{{ veiculo.id }}</td>
+            <td><input class="form-control form-control-sm" [(ngModel)]="veiculoEditando()!.modelo" /></td>
+            <td><input class="form-control form-control-sm" [(ngModel)]="veiculoEditando()!.marca" /></td>
+            <td><input class="form-control form-control-sm" type="number" [(ngModel)]="veiculoEditando()!.ano" /></td>
+            <td><input class="form-control form-control-sm text-uppercase" [(ngModel)]="veiculoEditando()!.placa" maxlength="8" /></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-success me-1" (click)="salvar()">Salvar</button>
+              <button class="btn btn-sm btn-secondary" (click)="cancelar()">Cancelar</button>
+            </td>
+          </tr>
+        } @else {
+          <!-- Tabela -->
+          <tr>
+            <td>{{ veiculo.id }}</td>
+            <td>{{ veiculo.modelo }}</td>
+            <td>{{ veiculo.marca }}</td>
+            <td>{{ veiculo.ano }}</td>
+            <td>{{ veiculo.placa }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="editar(veiculo)">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deletar(veiculo.id)">Excluir</button>
+            </td>
+          </tr>
+        }
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4">Nenhum veículo cadastrado.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

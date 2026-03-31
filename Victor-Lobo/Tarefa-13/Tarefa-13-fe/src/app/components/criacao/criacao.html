@@ -1,0 +1,85 @@
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title mb-4">Cadastro de Veículo</h3>
+
+      @if (sucesso) {
+      <div class="alert alert-success">Veículo cadastrado com sucesso!</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Modelo -->
+        <div class="mb-3">
+          <label class="form-label">Modelo *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="modelo"
+            placeholder="Ex: Corolla"
+            [class.is-invalid]="isInvalid('modelo')"
+            [class.is-valid]="form.get('modelo')?.valid"
+          />
+          @if (isInvalid('modelo')) {
+          <div class="invalid-feedback">Modelo obrigatório.</div>
+          }
+        </div>
+
+        <!-- Marca -->
+        <div class="mb-3">
+          <label class="form-label">Marca *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="marca"
+            placeholder="Ex: Toyota"
+            [class.is-invalid]="isInvalid('marca')"
+            [class.is-valid]="form.get('marca')?.valid"
+          />
+          @if (isInvalid('marca')) {
+          <div class="invalid-feedback">Marca obrigatória.</div>
+          }
+        </div>
+
+        <!-- Ano -->
+        <div class="mb-3">
+          <label class="form-label">Ano *</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="ano"
+            placeholder="Ex: 2022"
+            [class.is-invalid]="isInvalid('ano')"
+            [class.is-valid]="form.get('ano')?.valid"
+          />
+          @if (isInvalid('ano')) {
+          <div class="invalid-feedback">Ano inválido (1950-2026).</div>
+          }
+        </div>
+
+        <!-- Placa -->
+        <div class="mb-3">
+          <label class="form-label">Placa *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="placa"
+            placeholder="ABC1234 ou ABC1D23"
+            maxlength="7"
+            [class.is-invalid]="isInvalid('placa')"
+            [class.is-valid]="form.get('placa')?.valid"
+          />
+          @if (isInvalid('placa')) {
+          <div class="invalid-feedback">
+            Placa inválida (ex: ABC1234 ou ABC1D23).
+          </div>
+          }
+        </div>
+
+        <!-- Botão Cadastro -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

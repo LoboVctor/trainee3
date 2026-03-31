@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./Tarefa-13-be"
+    },
+    {
+      "path": "./Tarefa-13-fe"
+    }
+  ]
+}
